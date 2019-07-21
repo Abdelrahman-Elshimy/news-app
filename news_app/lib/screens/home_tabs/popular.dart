@@ -10,12 +10,7 @@ class Popular extends StatefulWidget {
 class _PopularState extends State<Popular> {
   List<Stories> stories = StoriesApi().listStories();
 
-  TextStyle _mainTitleStyle = TextStyle(
-    color: Colors.black.withOpacity(.6),
-    fontSize: 16,
-    fontWeight: FontWeight.w500,
-    letterSpacing: 1.2,
-  );
+
 
   TextStyle _subtitleStoryStyle = TextStyle(
     color: Color.fromRGBO(117, 117, 117, 1),
@@ -31,15 +26,7 @@ class _PopularState extends State<Popular> {
     );
   }
 
-  Widget _mainTitles(String title) {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: Text(
-        title,
-        style: _mainTitleStyle,
-      ),
-    );
-  }
+
 
   TextStyle _titleStoryStyle = TextStyle(
     color: Colors.black.withOpacity(.7),
