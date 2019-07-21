@@ -120,6 +120,7 @@ class _OnBoardingState extends State<OnBoarding> {
     List<Widget> widgets = [];
     for(var i in welcomeStats) {
       widgets.add(_circulindicator(Colors.grey, 7));
+      print(i);
     }
 
     for(int i = 0; i < welcomeStats.length; i++) {
