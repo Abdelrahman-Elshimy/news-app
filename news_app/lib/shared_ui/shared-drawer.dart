@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/screens/headlines.dart';
+import 'package:news_app/screens/home.dart';
+import 'package:news_app/screens/twitter_feed.dart';
+import '../models/nav_menu.dart';
 
 class SharedDrawer extends StatefulWidget {
   @override
@@ -6,6 +10,12 @@ class SharedDrawer extends StatefulWidget {
 }
 
 class _SharedDrawerState extends State<SharedDrawer> {
+
+  List<NavMenu> navsItems = [
+    NavMenu('Explore', () => HomePage()),
+    NavMenu('Head Line News', ()=> HeadLinesPage()),
+    NavMenu('Twitter Feed', ()=> TwitterFeedPage()),
+  ];
 
   List<String> navs = [
     'Explore',
@@ -23,10 +33,13 @@ class _SharedDrawerState extends State<SharedDrawer> {
         padding: EdgeInsets.only(left: 15, right: 15, top: MediaQuery.of(context).size.height * .18),
         child: ListView.builder(itemBuilder: (context, index){
           return ListTile(
-            title: Text(navs[index], style: TextStyle(color: Colors.black.withOpacity(.6), fontSize: 20),),
+            title: Text(navsItems[index].title, style: TextStyle(color: Colors.black.withOpacity(.6), fontSize: 18),),
             trailing: Icon(Icons.chevron_right, size: 30,),
+            onTap: (){
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> navsItems[index].destination()));
+            },
           );
-        }, itemCount: navs.length,),
+        }, itemCount: navsItems.length,),
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../models/stories.dart';
 import '../../api/stories.dart';
+import '../../util/shared_styles.dart';
 
 class WhatsNew extends StatefulWidget {
   @override
@@ -9,28 +10,10 @@ class WhatsNew extends StatefulWidget {
 
 class _WhatsNewState extends State<WhatsNew> {
   List<Stories> stories = StoriesApi().listStories();
+  
+  SharedStyles sharedStyles = new SharedStyles();
 
-
-  TextStyle _mainTitleStyle = TextStyle(
-    color: Colors.black.withOpacity(.6),
-    fontSize: 16,
-    fontWeight: FontWeight.w500,
-    letterSpacing: 1.2,
-  );
-
-  TextStyle _titleStoryStyle = TextStyle(
-    color: Colors.black.withOpacity(.7),
-    fontSize: 16,
-    fontWeight: FontWeight.w500,
-    letterSpacing: 1.2,
-  );
-
-  TextStyle _subtitleStoryStyle = TextStyle(
-    color: Color.fromRGBO(117, 117, 117, 1),
-    fontSize: 13,
-    letterSpacing: 1.1,
-  );
-
+  
   Widget _timeIcon() {
     return Icon(
       Icons.timer,
@@ -44,7 +27,7 @@ class _WhatsNewState extends State<WhatsNew> {
       alignment: Alignment.centerLeft,
       child: Text(
         title,
-        style: _mainTitleStyle,
+        style: sharedStyles.mainTitleStyle,
       ),
     );
   }
@@ -101,7 +84,7 @@ class _WhatsNewState extends State<WhatsNew> {
                       margin: EdgeInsets.only(bottom: 5),
                       child: Text(
                         stories[x].title,
-                        style: _mainTitleStyle,
+                        style: sharedStyles.mainTitleStyle,
                       ),
                     ),
                     Row(
@@ -110,7 +93,7 @@ class _WhatsNewState extends State<WhatsNew> {
                         _timeIcon(),
                         Text(
                           stories[x].time,
-                          style: _subtitleStoryStyle,
+                          style: sharedStyles.subtitleStoryStyle,
                         )
                       ],
                     )
@@ -166,7 +149,7 @@ class _WhatsNewState extends State<WhatsNew> {
                                 Container(
                                   child: Text(
                                     stories[i].title,
-                                    style: _titleStoryStyle,
+                                    style: sharedStyles.titleStoryStyle,
                                     textAlign: TextAlign.left,
                                   ),
                                 ),
@@ -176,13 +159,13 @@ class _WhatsNewState extends State<WhatsNew> {
                                       Expanded(
                                         child: Text(
                                           stories[i].author,
-                                          style: _subtitleStoryStyle,
+                                          style: sharedStyles.subtitleStoryStyle,
                                         ),
                                       ),
                                       _timeIcon(),
                                       Text(
                                         stories[i].time,
-                                        style: _subtitleStoryStyle,
+                                        style: sharedStyles.subtitleStoryStyle,
                                       )
                                     ],
                                   ),

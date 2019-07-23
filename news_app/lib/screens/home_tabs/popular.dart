@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/util/shared_styles.dart';
 import '../../models/stories.dart';
 import '../../api/stories.dart';
 
@@ -9,14 +10,10 @@ class Popular extends StatefulWidget {
 
 class _PopularState extends State<Popular> {
   List<Stories> stories = StoriesApi().listStories();
+  SharedStyles sharedStyles = new SharedStyles();
 
 
 
-  TextStyle _subtitleStoryStyle = TextStyle(
-    color: Color.fromRGBO(117, 117, 117, 1),
-    fontSize: 13,
-    letterSpacing: 1.1,
-  );
 
   Widget _timeIcon() {
     return Icon(
@@ -28,12 +25,7 @@ class _PopularState extends State<Popular> {
 
 
 
-  TextStyle _titleStoryStyle = TextStyle(
-    color: Colors.black.withOpacity(.7),
-    fontSize: 16,
-    fontWeight: FontWeight.w500,
-    letterSpacing: 1.2,
-  );
+
 
   List<Widget> _topStoried(int count) {
     List<Widget> topStroies = [];
@@ -77,7 +69,7 @@ class _PopularState extends State<Popular> {
                                   Container(
                                     child: Text(
                                       stories[i].title,
-                                      style: _titleStoryStyle,
+                                      style: sharedStyles.titleStoryStyle,
                                       textAlign: TextAlign.left,
                                     ),
                                   ),
@@ -87,13 +79,13 @@ class _PopularState extends State<Popular> {
                                         Expanded(
                                           child: Text(
                                             stories[i].author,
-                                            style: _subtitleStoryStyle,
+                                            style: sharedStyles.subtitleStoryStyle,
                                           ),
                                         ),
                                         _timeIcon(),
                                         Text(
                                           stories[i].time,
-                                          style: _subtitleStoryStyle,
+                                          style: sharedStyles.subtitleStoryStyle,
                                         )
                                       ],
                                     ),

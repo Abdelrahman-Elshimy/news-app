@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/util/shared_styles.dart';
 import '../../models/stories.dart';
 import '../../api/stories.dart';
 import 'dart:math';
@@ -10,7 +11,7 @@ class Favourite extends StatefulWidget {
 
 class _FavouriteState extends State<Favourite> {
   List<Stories> stories = StoriesApi().listStories();
-
+  SharedStyles sharedStyles = new SharedStyles();
   List<Color> catColors =[
     Colors.red,
     Colors.green,
@@ -19,26 +20,6 @@ class _FavouriteState extends State<Favourite> {
     Colors.cyanAccent,
   ];
 
-  TextStyle _subtitleStoryStyle = TextStyle(
-    color: Color.fromRGBO(117, 117, 117, 1),
-    fontSize: 13,
-    letterSpacing: 1.1,
-  );
-
-  Widget _timeIcon() {
-    return Icon(
-      Icons.timer,
-      size: 18,
-      color: Color.fromRGBO(117, 117, 117, 1),
-    );
-  }
-
-  TextStyle _titleStoryStyle = TextStyle(
-    color: Colors.black.withOpacity(.7),
-    fontSize: 16,
-    fontWeight: FontWeight.w500,
-    letterSpacing: 1.2,
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +49,7 @@ class _FavouriteState extends State<Favourite> {
             ),
             title: Text(
               stories[index].author,
-              style: _subtitleStoryStyle,
+              style: sharedStyles.subtitleStoryStyle,
             ),
             subtitle: Row(
               children: <Widget>[
@@ -116,7 +97,7 @@ class _FavouriteState extends State<Favourite> {
                       children: <Widget>[
                         Text(
                           stories[index].title,
-                          style: _titleStoryStyle,
+                          style: sharedStyles.subtitleStoryStyle,
                         ),
                         SizedBox(height: 15,),
                         Text(
