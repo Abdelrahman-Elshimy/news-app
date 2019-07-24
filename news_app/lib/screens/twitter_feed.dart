@@ -60,8 +60,9 @@ class _TwitterFeedPageState extends State<TwitterFeedPage> {
                             twittsList[index].name,
                             style: sharedStyles.titleStoryStyle,
                           ),
+                          SizedBox(width: 4,),
                           Text(
-                            '@ ${twittsList[index].username}',
+                            '@${twittsList[index].username}',
                             style: sharedStyles.subtitleStoryStyle,
                           )
                         ],

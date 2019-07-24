@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/screens/facebook_feeds.dart';
 import 'package:news_app/screens/headlines.dart';
 import 'package:news_app/screens/home.dart';
+import 'package:news_app/screens/instgram_feed.dart';
 import 'package:news_app/screens/twitter_feed.dart';
 import '../models/nav_menu.dart';
 
@@ -14,7 +16,9 @@ class _SharedDrawerState extends State<SharedDrawer> {
   List<NavMenu> navsItems = [
     NavMenu('Explore', () => HomePage()),
     NavMenu('Head Line News', ()=> HeadLinesPage()),
-    NavMenu('Twitter Feed', ()=> TwitterFeedPage()),
+    NavMenu('Twitter Feeds', ()=> TwitterFeedPage()),
+    NavMenu('Instgram Feeds', ()=> InstgramFeedPage()),
+    NavMenu('Face Book Feeds', () => FaceBookPage()),
   ];
 
   List<String> navs = [

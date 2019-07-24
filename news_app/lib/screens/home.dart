@@ -9,14 +9,18 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
-  
+enum popUpMenu { ABOUT, HELP, CONTACT, SETTINGS }
+
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
   TabController _tabController;
+
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,12 +29,34 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         title: Text('Explore'),
         actions: <Widget>[
           IconButton(
-            onPressed: (){},
+            onPressed: () {},
             icon: Icon(Icons.search),
           ),
-          IconButton(
-            onPressed: (){},
+          PopupMenuButton(
             icon: Icon(Icons.more_vert),
+            itemBuilder: (BuildContext context) {
+              return [
+                PopupMenuItem<popUpMenu>(
+                  value: popUpMenu.ABOUT,
+                  child: Text('ABOUT'),
+                ),
+                PopupMenuItem<popUpMenu>(
+                  value: popUpMenu.HELP,
+                  child: Text('HELP'),
+                ),
+                PopupMenuItem<popUpMenu>(
+                  value: popUpMenu.CONTACT,
+                  child: Text('CONTACT'),
+                ),
+                PopupMenuItem<popUpMenu>(
+                  value: popUpMenu.SETTINGS,
+                  child: Text('SETTINGS'),
+                ),
+              ];
+            },
+            onSelected: (popUpMenu menu) {
+              //: TODO
+            },
           ),
         ],
         bottom: TabBar(
@@ -46,11 +72,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       ),
       drawer: SharedDrawer(),
       body: TabBarView(
-        children: <Widget>[
-          WhatsNew(),
-          Popular(),
-          Favourite()
-        ],
+        children: <Widget>[WhatsNew(), Popular(), Favourite()],
         controller: _tabController,
       ),
     );
