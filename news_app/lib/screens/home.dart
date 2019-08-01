@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/api/authors_api.dart';
 import '../shared_ui/shared-drawer.dart';
 import '../screens/home_tabs/whats-new.dart';
 import '../screens/home_tabs/popular.dart';
 import '../screens/home_tabs/favourite.dart';
+
+
 
 class HomePage extends StatefulWidget {
   @override
@@ -13,16 +16,20 @@ enum popUpMenu { ABOUT, HELP, CONTACT, SETTINGS }
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
+
+  AuthorAPI authorApi = new AuthorAPI();
   TabController _tabController;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
+    authorApi.fetchAllAuthor();
   }
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
