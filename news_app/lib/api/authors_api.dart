@@ -7,24 +7,24 @@ import '../util/api_util.dart';
 import 'package:news_app/models/author.dart';
 
 class AuthorAPI {
-  String allAuthorApiUrl = base_api + all_author_api_url;
+  String allAuthorApiUrl = baseApi + allAuthorApiUrlApp;
 
-  Future< List<Author> > fetchAllAuthor() async {
+  Future<List<Author>> fetchAllAuthor() async {
+    List<Author> authors = [];
     try {
-      List<Author> authors = [];
       var response = await http.get(allAuthorApiUrl);
       if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
         var data = jsonData['data'];
-
         for (var item in data) {
-          Author author = Author(item['id'].toString(), item['name'].toString(), item['email'].toString(), item['avatar'].toString());
+          Author author = Author(item['id'].toString(), item['name'].toString(),
+              item['email'].toString(), item['avatar'].toString());
           authors.add(author);
         }
-        return authors;
       }
     } catch (err) {
       print(err);
     }
+    return authors;
   }
 }

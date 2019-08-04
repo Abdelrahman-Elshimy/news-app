@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/api/authors_api.dart';
+import 'package:news_app/api/categories_api.dart';
+import 'package:news_app/api/posts_api.dart';
 import '../shared_ui/shared-drawer.dart';
 import '../screens/home_tabs/whats-new.dart';
 import '../screens/home_tabs/popular.dart';
@@ -25,6 +27,8 @@ class _HomePageState extends State<HomePage>
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
     authorApi.fetchAllAuthor();
+    CategoriesApi().fetchAllCategory();
+    PostsApi().fetchWhatsNews();
   }
 
   @override
@@ -62,7 +66,6 @@ class _HomePageState extends State<HomePage>
               ];
             },
             onSelected: (popUpMenu menu) {
-              //: TODO
             },
           ),
         ],

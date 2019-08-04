@@ -1,2 +1,5 @@
-String base_api = "https://newsappapi.000webhostapp.com";
-String all_author_api_url ="/api/authors";
+String baseApi = "https://newsappapi.000webhostapp.com";
+String allAuthorApiUrlApp ="/api/authors";
+String allCategoryApiUrlApp = "/api/categories";
+String whatsNewsApp = "/api/posts/categories/1";
+String recentUpdatesNewsApp = "/api/posts/categories/2";
