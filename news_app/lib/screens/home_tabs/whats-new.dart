@@ -3,6 +3,8 @@ import 'package:news_app/util/colors_news.dart';
 import '../../models/post.dart';
 import '../../api/posts_api.dart';
 import '../../util/shared_styles.dart';
+import 'package:news_app/util/utilies.dart';
+import 'dart:math';
 import 'package:timeago/timeago.dart' as timeago;
 
 class WhatsNew extends StatefulWidget {
@@ -38,6 +40,15 @@ class _WhatsNewState extends State<WhatsNew> {
         title,
         style: sharedStyles.mainTitleStyle,
       ),
+    );
+  }
+
+  Widget getDumyRand() {
+    return Container(
+      padding: EdgeInsets.only(left: 50, right: 50),
+      width: double.infinity,
+      height: MediaQuery.of(context).size.height * .3,
+      color: NewsColors().dummy,
     );
   }
 
@@ -154,8 +165,6 @@ class _WhatsNewState extends State<WhatsNew> {
   // top story widget
   Widget _topStoried(Post post) {
     return Container(
-      // width: double.infinity,
-      // padding: EdgeInsets.all(10),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
@@ -300,48 +309,94 @@ class _WhatsNewState extends State<WhatsNew> {
     );
   }
 
+  // Get Random Top Stories
+  Widget _getRandTopStories() {
+    return FutureBuilder(
+      future: postsApi.fetchWhatsNews(),
+      builder: (context, AsyncSnapshot snapShot) {
+        switch (snapShot.connectionState) {
+          case ConnectionState.waiting:
+            // make dummy shape until real data come.
+            return getDumyRand();
+            break;
+          case ConnectionState.active:
+            // make dummy shape until real data come.
+            return getDumyRand();
+            break;
+          case ConnectionState.none:
+            return noConnection();
+            break;
+          case ConnectionState.done:
+            if (snapShot.error != null) {
+              return error();
+            } else {
+              List posts = snapShot.data;
+              if (posts.length > 0) {
+                if (snapShot.hasData) {
+                  List<Post> posts = snapShot.data;
+                  Random random = new Random();
+                  int ind = random.nextInt(posts.length);
+                  Post post = posts[ind];
+                  print(post.featuredImage);
+                  return Container(
+                    padding: EdgeInsets.only(left: 50, right: 50),
+                    width: double.infinity,
+                    height: MediaQuery.of(context).size.height * .3,
+                    decoration: BoxDecoration(
+                      
+                      image: DecorationImage(
+                          image: NetworkImage(post.featuredImage.toString()),
+                          fit: BoxFit.cover),
+                          color: NewsColors().dummy,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          post.title,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                            letterSpacing: 1.2,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          post.content.substring(1, 70) + '.....',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  );
+                } else {
+                  return noData();
+                }
+              } else {
+                return noData();
+              }
+            }
+
+            break;
+        }
+        return null;
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
-        Container(
-          padding: EdgeInsets.only(left: 50, right: 50),
-          width: double.infinity,
-          height: MediaQuery.of(context).size.height * .3,
-          decoration: BoxDecoration(
-            color: Colors.black.withOpacity(.8),
-            image: DecorationImage(
-                image: ExactAssetImage('assets/images/bg.jpg'),
-                fit: BoxFit.cover),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'How Terriers & Royals Gatechrashed Final.',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 1.2,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                'There is no one who loves pain itself, who seeks after it and wants to have it.',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 15,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
-        ),
+        _getRandTopStories(),
         Container(
           margin: EdgeInsets.all(10),
           child: Column(
@@ -366,11 +421,11 @@ class _WhatsNewState extends State<WhatsNew> {
                           return getAllSumyShapTopStories();
                           break;
                         case ConnectionState.none:
-                          return _noConnection();
+                          return noConnection();
                           break;
                         case ConnectionState.done:
                           if (snapShot.error != null) {
-                            return _error();
+                            return error();
                           } else {
                             List posts = snapShot.data;
                             if (posts.length >= 3) {
@@ -388,10 +443,10 @@ class _WhatsNewState extends State<WhatsNew> {
                                   ],
                                 );
                               } else {
-                                return _noData();
+                                return noData();
                               }
                             } else {
-                              return _noData();
+                              return noData();
                             }
                           }
 
@@ -421,11 +476,11 @@ class _WhatsNewState extends State<WhatsNew> {
                         return _dumyShapRecentUpdates();
                         break;
                       case ConnectionState.none:
-                        return _noConnection();
+                        return noConnection();
                         break;
                       case ConnectionState.done:
                         if (snapShot.error != null) {
-                          return _error();
+                          return error();
                         } else {
                           List posts = snapShot.data;
                           if (posts.length >= 2) {
@@ -439,10 +494,10 @@ class _WhatsNewState extends State<WhatsNew> {
                                 ],
                               );
                             } else {
-                              return _noData();
+                              return noData();
                             }
                           } else {
-                            return _noData();
+                            return noData();
                           }
                         }
 
@@ -458,37 +513,4 @@ class _WhatsNewState extends State<WhatsNew> {
       ],
     );
   }
-}
-
-Widget _noConnection() {
-  return Container(
-    width: double.infinity,
-    padding: EdgeInsets.all(16),
-    child: Text(
-      'Whoops , Connection error !!!!!',
-      textAlign: TextAlign.center,
-    ),
-  );
-}
-
-Widget _error() {
-  return Container(
-    width: double.infinity,
-    padding: EdgeInsets.all(16),
-    child: Text(
-      'Whoops , Something error !!',
-      textAlign: TextAlign.center,
-    ),
-  );
-}
-
-Widget _noData() {
-  return Container(
-    width: double.infinity,
-    padding: EdgeInsets.all(16),
-    child: Text(
-      'Whoops , No Data Available',
-      textAlign: TextAlign.center,
-    ),
-  );
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:news_app/api/posts_api.dart';
 import 'package:news_app/models/post.dart';
 import 'package:news_app/util/shared_styles.dart';
+import 'package:news_app/util/utilies.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class Popular extends StatefulWidget {
@@ -27,7 +28,7 @@ class _PopularState extends State<Popular> {
     DateTime theDif = DateTime.now().subtract(timeAgo);
     return timeago.format(theDif);
   }
-
+  // get popular stories
   Widget _popularStories(Post post) {
     return Container(
       width: double.infinity,
@@ -106,12 +107,6 @@ class _PopularState extends State<Popular> {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: 10),
-      // child: ListView(
-      //   children: [
-      //     _popularStories(),
-      //     ],
-      // ),
-
       child: FutureBuilder(
         future: postsAPI.fetchPopular(),
         builder: (context, AsyncSnapshot snapShot) {
@@ -131,11 +126,11 @@ class _PopularState extends State<Popular> {
               );
               break;
             case ConnectionState.none:
-              return _noConnection();
+              return noConnection();
               break;
             case ConnectionState.done:
               if (snapShot.error != null) {
-                return _error();
+                return error();
               } else {
                 List posts = snapShot.data;
                 if (posts.length > 0) {
@@ -147,10 +142,10 @@ class _PopularState extends State<Popular> {
                       itemCount: posts.length,
                     );
                   } else {
-                    return _noData();
+                    return noData();
                   }
                 } else {
-                  return _noData();
+                  return noData();
                 }
               }
 
@@ -161,36 +156,4 @@ class _PopularState extends State<Popular> {
       ),
     );
   }
-}
-Widget _noConnection() {
-  return Container(
-    width: double.infinity,
-    padding: EdgeInsets.all(16),
-    child: Text(
-      'Whoops , Connection error !!!!!',
-      textAlign: TextAlign.center,
-    ),
-  );
-}
-
-Widget _error() {
-  return Container(
-    width: double.infinity,
-    padding: EdgeInsets.all(16),
-    child: Text(
-      'Whoops , Something error !!',
-      textAlign: TextAlign.center,
-    ),
-  );
-}
-
-Widget _noData() {
-  return Container(
-    width: double.infinity,
-    padding: EdgeInsets.all(16),
-    child: Text(
-      'Whoops , No Data Available',
-      textAlign: TextAlign.center,
-    ),
-  );
 }
