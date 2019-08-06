@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/api/posts_api.dart';
 import 'package:news_app/models/post.dart';
+import 'package:news_app/screens/single_page.dart';
 import 'package:news_app/util/shared_styles.dart';
 import 'package:news_app/util/utilies.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -28,6 +29,7 @@ class _PopularState extends State<Popular> {
     DateTime theDif = DateTime.now().subtract(timeAgo);
     return timeago.format(theDif);
   }
+
   // get popular stories
   Widget _popularStories(Post post) {
     return Container(
@@ -121,7 +123,7 @@ class _PopularState extends State<Popular> {
             case ConnectionState.active:
               // make dummy shape until real data come.
               // return getAllSumyShapTopStories();
-               return Center(
+              return Center(
                 child: CircularProgressIndicator(),
               );
               break;
@@ -132,12 +134,20 @@ class _PopularState extends State<Popular> {
               if (snapShot.error != null) {
                 return error();
               } else {
-                List posts = snapShot.data;
+                List<Post> posts = snapShot.data;
                 if (posts.length > 0) {
                   if (snapShot.hasData) {
                     return ListView.builder(
                       itemBuilder: (content, index) {
-                        return _popularStories(snapShot.data[index]);
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return SinglePostPage(posts[index]);
+                            }));
+                          },
+                          child: _popularStories(posts[index]),
+                        );
                       },
                       itemCount: posts.length,
                     );

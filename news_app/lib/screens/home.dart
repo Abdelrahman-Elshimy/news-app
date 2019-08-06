@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:news_app/api/authors_api.dart';
 import 'package:news_app/api/categories_api.dart';
 import 'package:news_app/api/posts_api.dart';
+import 'package:news_app/screens/menupages/about.dart';
+import 'package:news_app/screens/menupages/contact.dart';
+import 'package:news_app/screens/menupages/help.dart';
+import 'package:news_app/screens/menupages/settings.dart';
 import '../shared_ui/shared-drawer.dart';
 import '../screens/home_tabs/whats-new.dart';
 import '../screens/home_tabs/popular.dart';
 import '../screens/home_tabs/favourite.dart';
-
-
 
 class HomePage extends StatefulWidget {
   @override
@@ -18,7 +20,6 @@ enum popUpMenu { ABOUT, HELP, CONTACT, SETTINGS }
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
-
   AuthorAPI authorApi = new AuthorAPI();
   TabController _tabController;
 
@@ -33,7 +34,6 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -66,6 +66,24 @@ class _HomePageState extends State<HomePage>
               ];
             },
             onSelected: (popUpMenu menu) {
+              switch (menu) {
+                case popUpMenu.ABOUT:
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => About()));
+                  break;
+                case popUpMenu.HELP:
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => Help()));
+                  break;
+                case popUpMenu.CONTACT:
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Contact()));
+                  break;
+                case popUpMenu.SETTINGS:
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Settings()));
+                  break;
+              }
             },
           ),
         ],

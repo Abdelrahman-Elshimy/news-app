@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/screens/single_page.dart';
 import 'package:news_app/util/colors_news.dart';
 import '../../models/post.dart';
 import '../../api/posts_api.dart';
@@ -338,43 +339,50 @@ class _WhatsNewState extends State<WhatsNew> {
                   int ind = random.nextInt(posts.length);
                   Post post = posts[ind];
                   print(post.featuredImage);
-                  return Container(
-                    padding: EdgeInsets.only(left: 50, right: 50),
-                    width: double.infinity,
-                    height: MediaQuery.of(context).size.height * .3,
-                    decoration: BoxDecoration(
-                      
-                      image: DecorationImage(
-                          image: NetworkImage(post.featuredImage.toString()),
-                          fit: BoxFit.cover),
-                          color: NewsColors().dummy,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          post.title,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 1.2,
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return SinglePostPage(post);
+                      }));
+                    },
+                    child: Container(
+                      padding: EdgeInsets.only(left: 50, right: 50),
+                      width: double.infinity,
+                      height: MediaQuery.of(context).size.height * .3,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: NetworkImage(post.featuredImage.toString()),
+                            fit: BoxFit.cover),
+                        color: NewsColors().dummy,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            post.title,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: 1.2,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          textAlign: TextAlign.center,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          post.content.substring(1, 70) + '.....',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
+                          SizedBox(
+                            height: 10,
                           ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
+                          Text(
+                            post.content.substring(1, 70) + '.....',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 } else {
@@ -435,11 +443,38 @@ class _WhatsNewState extends State<WhatsNew> {
                                 Post post2 = snapShot.data[3];
                                 return Column(
                                   children: [
-                                    _topStoried(post),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return SinglePostPage(post);
+                                        }));
+                                      },
+                                      child: _topStoried(post),
+                                    ),
                                     Divider(),
-                                    _topStoried(post1),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return SinglePostPage(post);
+                                        }));
+                                      },
+                                      child: _topStoried(post1),
+                                    ),
                                     Divider(),
-                                    _topStoried(post2),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return SinglePostPage(post);
+                                        }));
+                                      },
+                                      child: _topStoried(post2),
+                                    ),
                                   ],
                                 );
                               } else {
@@ -489,8 +524,26 @@ class _WhatsNewState extends State<WhatsNew> {
                               Post post1 = snapShot.data[1];
                               return Column(
                                 children: [
-                                  _recentStories(post),
-                                  _recentStories(post1),
+                                  GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return SinglePostPage(post);
+                                        }));
+                                      },
+                                      child: _recentStories(post),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return SinglePostPage(post);
+                                        }));
+                                      },
+                                      child: _recentStories(post1),
+                                    ),
                                 ],
                               );
                             } else {
