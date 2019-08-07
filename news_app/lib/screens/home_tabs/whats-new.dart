@@ -459,7 +459,7 @@ class _WhatsNewState extends State<WhatsNew> {
                                         Navigator.push(context,
                                             MaterialPageRoute(
                                                 builder: (context) {
-                                          return SinglePostPage(post);
+                                          return SinglePostPage(post1);
                                         }));
                                       },
                                       child: _topStoried(post1),
@@ -470,7 +470,7 @@ class _WhatsNewState extends State<WhatsNew> {
                                         Navigator.push(context,
                                             MaterialPageRoute(
                                                 builder: (context) {
-                                          return SinglePostPage(post);
+                                          return SinglePostPage(post2);
                                         }));
                                       },
                                       child: _topStoried(post2),
@@ -539,7 +539,7 @@ class _WhatsNewState extends State<WhatsNew> {
                                         Navigator.push(context,
                                             MaterialPageRoute(
                                                 builder: (context) {
-                                          return SinglePostPage(post);
+                                          return SinglePostPage(post1);
                                         }));
                                       },
                                       child: _recentStories(post1),
